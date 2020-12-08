@@ -37,8 +37,9 @@ namespace ConsoleApp2
 
         /*ЗАМЕНА ЭЛЕМЕНТА В МАТРИЦЕ*/
 
-        public void Change(int ChangeRows, int ChangeCols, int Changable)
+        public Matrix Change(int ChangeRows, int ChangeCols, int Changable)
         {
+            Matrix matrix = this;
             if ((ChangeRows > rows) || (ChangeCols > cols))
                 throw new IndexOutOfRangeException();
             else
@@ -49,12 +50,13 @@ namespace ConsoleApp2
                     {
                         if (ChangeRows == i && ChangeCols == j)
                         {
-                            mass[i - 1, j - 1] = Changable;
+                            matrix.mass[i - 1, j - 1] = Changable;
                             break;
                         }
                     }
                 }
             }
+            return matrix;
         }
 
         /*УМНОЖЕНИЕ МАТРИЦЫ НА СКАЛЯР*/

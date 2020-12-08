@@ -53,8 +53,7 @@ namespace ConsoleApp2
             Console.WriteLine("Замена элемента:");
             try
             {
-                A.Change(ChangeRows, ChangeCols, Changable);
-                Console.Write(A);
+                Console.Write(A.Change(ChangeRows, ChangeCols, Changable));
             }
             catch (IndexOutOfRangeException ex)
             {
