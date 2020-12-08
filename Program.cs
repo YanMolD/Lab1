@@ -16,7 +16,7 @@ namespace ConsoleApp2
             int num = 10;
             //ПАРАМЕТРЫ ДВУХ МАТРИЦ
             int rows = 2, cols = 2;
-            int rows2 = 3, cols2 = 2;
+            int rows2 = 2, cols2 = 2;
             //ПАРАМЕТРЫ ЗАМЕНЯЕМОГО ЭЛЕМЕНТА
             int ChangeRows = 1, ChangeCols = 1, Changable = 10;
 
@@ -53,7 +53,7 @@ namespace ConsoleApp2
             Console.WriteLine("Замена элемента:");
             try
             {
-                Matrix.Change(A, ChangeRows, ChangeCols, Changable);
+                A.Change(ChangeRows, ChangeCols, Changable);
                 Console.Write(A);
             }
             catch (IndexOutOfRangeException ex)
@@ -89,8 +89,7 @@ namespace ConsoleApp2
             Console.WriteLine();
 
             Console.WriteLine("Умножение на скаляр:");
-            Res = Matrix.NUM(A, num);
-            Console.Write(Res);
+            Console.Write(A.NUM(num));
             Console.WriteLine();
 
             Console.WriteLine("Умножение матриц:");
@@ -105,7 +104,7 @@ namespace ConsoleApp2
 
             try
             {
-                Console.WriteLine("Детерминант матрицы А равен {0}\nДетерминант матрицы B равен {1}", Matrix.Determinant(A), Matrix.Determinant(B));
+                Console.WriteLine("Детерминант матрицы А равен {0}\nДетерминант матрицы B равен {1}", A.Determinant(), B.Determinant());
             }
             catch (InvalidOperationException ex)
             {

@@ -10,20 +10,8 @@ namespace ConsoleApp2
 {
     internal class Matrix
     {
-        private int rows, cols;
+        public readonly int rows, cols;
         private int[,] mass;
-
-        public int ROWS
-        {
-            get { return rows; }
-            set { if (value > 0) rows = value; }
-        }
-
-        public int COLS
-        {
-            get { return cols; }
-            set { if (value > 0) cols = value; }
-        }
 
         public Matrix(int rows, int cols)
         {
@@ -49,37 +37,36 @@ namespace ConsoleApp2
 
         /*ЗАМЕНА ЭЛЕМЕНТА В МАТРИЦЕ*/
 
-        public static Matrix Change(Matrix a, int ChangeRows, int ChangeCols, int Changable)
+        public void Change(int ChangeRows, int ChangeCols, int Changable)
         {
-            if ((ChangeRows > a.ROWS) || (ChangeCols > a.COLS))
+            if ((ChangeRows > rows) || (ChangeCols > cols))
                 throw new IndexOutOfRangeException();
             else
             {
-                for (int i = 1; i <= a.ROWS; i++)
+                for (int i = 1; i <= rows; i++)
                 {
-                    for (int j = 1; j <= a.COLS; j++)
+                    for (int j = 1; j <= cols; j++)
                     {
                         if (ChangeRows == i && ChangeCols == j)
                         {
-                            a.mass[i - 1, j - 1] = Changable;
+                            mass[i - 1, j - 1] = Changable;
                             break;
                         }
                     }
                 }
             }
-            return a;
         }
 
         /*УМНОЖЕНИЕ МАТРИЦЫ НА СКАЛЯР*/
 
-        public static Matrix NUM(Matrix a, int num)
+        public Matrix NUM(int num)
         {
-            Matrix array = new Matrix(a.ROWS, a.COLS);
-            for (int i = 0; i < a.ROWS; i++)
+            Matrix array = new Matrix(rows, cols);
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < a.COLS; j++)
+                for (int j = 0; j < cols; j++)
                 {
-                    array.mass[i, j] = a.mass[i, j] * num;
+                    array.mass[i, j] = mass[i, j] * num;
                 }
             }
             return array;
@@ -89,14 +76,14 @@ namespace ConsoleApp2
 
         public static Matrix operator -(Matrix a, Matrix b)
         {
-            Matrix array = new Matrix(a.ROWS, a.COLS);
-            if ((a.ROWS != b.ROWS) || (a.COLS != b.COLS))
+            Matrix array = new Matrix(a.rows, a.cols);
+            if ((a.rows != b.rows) || (a.cols != b.cols))
                 throw new InvalidOperationException();
             else
             {
-                for (int i = 0; i < a.ROWS; i++)
+                for (int i = 0; i < a.rows; i++)
                 {
-                    for (int j = 0; j < b.COLS; j++)
+                    for (int j = 0; j < b.cols; j++)
                     {
                         array.mass[i, j] = a.mass[i, j] - b.mass[i, j];
                     }
@@ -109,15 +96,15 @@ namespace ConsoleApp2
 
         public static Matrix operator +(Matrix a, Matrix b)
         {
-            Matrix array = new Matrix(a.ROWS, a.COLS);
+            Matrix array = new Matrix(a.rows, a.cols);
 
-            if ((a.ROWS != b.ROWS) || (a.COLS != b.COLS))
+            if ((a.rows != b.rows) || (a.cols != b.cols))
                 throw new InvalidOperationException();
             else
             {
-                for (int i = 0; i < a.ROWS; i++)
+                for (int i = 0; i < a.rows; i++)
                 {
-                    for (int j = 0; j < b.COLS; j++)
+                    for (int j = 0; j < b.cols; j++)
                     {
                         array.mass[i, j] = a.mass[i, j] + b.mass[i, j];
                     }
@@ -130,27 +117,47 @@ namespace ConsoleApp2
 
         public static Matrix Multiply(Matrix MatrixA, Matrix MatrixB)
         {
-            Matrix MatrixC = new Matrix(MatrixA.ROWS, MatrixB.COLS);
+            Matrix MatrixC = new Matrix(MatrixA.rows, MatrixB.cols);
 
-            if (MatrixA.COLS != MatrixB.ROWS)
+            if (MatrixA.cols != MatrixB.rows)
                 throw new InvalidOperationException();
             else
             {
-                for (int i = 0; i < MatrixA.ROWS; i++)
-                    for (int j = 0; j < MatrixB.COLS; j++)
+                for (int i = 0; i < MatrixA.rows; i++)
+                    for (int j = 0; j < MatrixB.cols; j++)
                     {
-                        for (int r = 0; r < MatrixA.COLS; r++)
+                        for (int r = 0; r < MatrixA.cols; r++)
                             MatrixC.mass[i, j] += MatrixA.mass[i, r] * MatrixB.mass[r, j];
                     }
             }
             return MatrixC;
         }
 
-        public static int Determinant(Matrix a)
+        public int Determinant()
         {
-            int rows = a.COLS, determ = 0, minor_determ, parity;
+            int rows = cols, determ = 0, minor_determ, parity;
 
-            if (a.ROWS != a.COLS)
+            if (rows != cols)
+                throw new InvalidOperationException();
+            else
+            {
+                if (rows == 2)
+                    return mass[0, 0] * mass[1, 1] - mass[0, 1] * mass[1, 0];
+                for (int i = 0; i < rows; i++)
+                {
+                    minor_determ = Determinant(Create_minor(this, i));
+                    parity = ((i & 1) == 0 ? 1 : -1);
+                    determ += parity * mass[0, i] * minor_determ;
+                }
+            }
+            return determ;
+        }
+
+        public int Determinant(Matrix a)
+        {
+            int rows = a.cols, determ = 0, minor_determ, parity;
+
+            if (a.rows != a.cols)
                 throw new InvalidOperationException();
             else
             {
@@ -166,9 +173,9 @@ namespace ConsoleApp2
             return determ;
         }
 
-        public static Matrix Create_minor(Matrix a, int coloumn)
+        private Matrix Create_minor(Matrix a, int coloumn)
         {
-            int rows = a.COLS - 1;
+            int rows = a.cols - 1;
             int count_coloumn = 0;
             Matrix Minor = new Matrix(rows, rows);
             for (int i = 1; i < rows + 1; i++)
@@ -179,11 +186,6 @@ namespace ConsoleApp2
                 count_coloumn = 0;
             }
             return Minor;
-        }
-
-        ~Matrix()
-        {
-            Console.WriteLine("Очистка");
         }
 
         public override string ToString()
