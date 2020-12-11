@@ -11,7 +11,7 @@ namespace ConsoleApp2
     internal class Matrix
     {
         public readonly int rows, cols;
-        private int[,] mass;
+        public readonly int[,] mass;
 
         public Matrix(int rows, int cols)
         {
@@ -188,6 +188,19 @@ namespace ConsoleApp2
                 count_coloumn = 0;
             }
             return Minor;
+        }
+
+        public bool Comparison(Matrix a)
+        {
+            if ((a == null) || ((a.rows == 0) || (a.cols == 0)))
+                throw new ArgumentException("Передана пустая матрица");
+            if ((a.cols != cols) || (a.rows != rows))
+                return false;
+            for (int i = 0; i < cols; i++)
+                for (int j = 0; j < cols; j++)
+                    if (a.mass[i, j] == mass[i, j])
+                        return false;
+            return true;
         }
 
         public override string ToString()

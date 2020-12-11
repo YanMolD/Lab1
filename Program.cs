@@ -109,6 +109,17 @@ namespace ConsoleApp2
             {
                 Console.WriteLine($"Невозможно посчитать определитель: {ex.Message}");
             }
+            try
+            {
+                if (A.Comparison(B))
+                    Console.WriteLine("Матрицы А и В равны\n");
+                else
+                    Console.WriteLine("Матрицы А и В не равны\n");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             Console.ReadKey();
         }
     }
