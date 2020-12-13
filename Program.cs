@@ -8,29 +8,25 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp2
 {
-    internal class MainProgram
+    partial class MainProgram
     {
         private static void Main(string[] args)
         {
             //СКАЛЯР
             int num = 10;
-            //ПАРАМЕТРЫ ДВУХ МАТРИЦ
-            int rows = 2, cols = 2;
-            int rows2 = 2, cols2 = 2;
             //ПАРАМЕТРЫ ЗАМЕНЯЕМОГО ЭЛЕМЕНТА
             int ChangeRows = 1, ChangeCols = 1, Changable = 10;
 
-            Matrix A = new Matrix(rows, cols);
-            Matrix B = new Matrix(rows2, cols2);
-            Matrix Res = new Matrix(rows, cols2);
-
+            Matrix Res;
+            Matrix A = null;
+            Matrix B = null;
         Enter:
             try
             {
                 Console.WriteLine("ввод Матрица А: ");
-                A.EnterMatrix();
+                A = new Matrix(EnterMatrix());
                 Console.WriteLine("Ввод Матрица B: ");
-                B.EnterMatrix();
+                B = new Matrix(EnterMatrix());
             }
             catch (ArgumentException ex)
             {
