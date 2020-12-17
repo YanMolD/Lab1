@@ -92,7 +92,6 @@ return mass;
                 array.mass[i, j] = mass[i, j] * num;
             }
         }
-        return array;
     }
 
     /*ВЫЧИТАНИЕ МАТРИЦ*/
