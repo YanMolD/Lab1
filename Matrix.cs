@@ -10,10 +10,11 @@ namespace ConsoleApp2
 {
     partial class MainProgram
     {
-        static public int[,] EnterMatrix();
+        static public int[,] EnterMatrix()
 
         {
             private int[,] mass;
+
         private int rows, cols;
         Console.WriteLine("Введите количество строк матрицы\n");
             rows = Convert.ToInt32(Console.ReadLine());
