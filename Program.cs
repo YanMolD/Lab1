@@ -12,7 +12,6 @@ namespace ConsoleApp2
     {
         private static void Main(string[] args)
         {
-            //СКАЛЯР
             int num = 10;
             int ChangeRows = 1, ChangeCols = 1, Changable = 10;
 
