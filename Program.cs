@@ -14,7 +14,6 @@ namespace ConsoleApp2
         {
             //СКАЛЯР
             int num = 10;
-            //ПАРАМЕТРЫ ЗАМЕНЯЕМОГО ЭЛЕМЕНТА
             int ChangeRows = 1, ChangeCols = 1, Changable = 10;
 
             Matrix Res;
